@@ -1,0 +1,19 @@
+{
+  "name": "plplpl",
+  "fields": [
+    {
+      "name": "ojkoj",
+      "type": "VARCHAR",
+      "size": 255,
+      "primary": false,
+      "nullable": true,
+      "default": null
+    }
+  ],
+  "createdAt": "2025-03-28T07:21:36.625Z",
+  "records": [
+    {
+      "ojkoj": "lllll"
+    }
+  ]
+}

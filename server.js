@@ -173,7 +173,136 @@ http.createServer((req, res) => {
   });
 }
 
-  // Rota não encontrada (404)
+  //Rota paraInserir registro
+  else if (req.url === '/insert-record' && req.method === 'POST') {
+    let body = '';
+
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+
+    req.on('end', () => {
+      try {
+        const { dbName, tableName, record } = JSON.parse(body);
+
+        if (!dbName || !tableName || !record) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Dados inválidos' }));
+        }
+
+        const tablePath = path.join('databases', dbName, `${tableName}.json`);
+
+        if (!fs.existsSync(tablePath)) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: 'Tabela não encontrada' }));
+        }
+
+        // Carrega a tabela
+        const tableData = JSON.parse(fs.readFileSync(tablePath, 'utf8'));
+
+        // Valida os campos do registro
+        const errors = [];
+        tableData.fields.forEach(field => {
+          if (!field.nullable && record[field.name] === undefined) {
+            errors.push(`Campo ${field.name} é obrigatório`);
+          }
+        });
+
+        if (errors.length > 0) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          return res.end(JSON.stringify({ error: errors.join(', ') }));
+        }
+
+        // Adiciona o registro
+        tableData.records.push(record)
+
+        // Salva a tabela atualizada
+      fs.writeFileSync(tablePath, JSON.stringify(tableData, null, 2));
+
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: true,
+        message: 'Registro inserido com sucesso'
+      }));
+
+    } catch (error) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        success: false,
+        message: error.message
+      }));
+    }
+  });
+}
+
+  //Rota para listas tabela
+  else if (req.url?.startsWith('/list-tables') && req.method === 'GET') {
+    const urlParams = new URL(req.url, `http://${req.headers.host}`);
+    const dbName = urlParams.searchParams.get('db');
+
+    if (!dbName) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'Nome do banco não fornecido' }));
+    }
+
+    const dbPath = path.join('databases', dbName);
+
+    try {
+        // Verifica se o diretório existe
+        if (!fs.existsSync(dbPath)) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ error: 'Banco não encontrado' }));
+        }
+
+        // Lê todos os arquivos .json no diretório do banco
+        const tables = fs.readdirSync(dbPath)
+            .filter(file => file.endsWith('.json'))
+            .map(file => file.replace('.json', ''));
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ tables }));
+    } catch (error) {
+        console.error('Erro ao listar tabelas:', error);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Erro ao listar tabelas' }));
+    }
+}
+
+  //Rota de estrutura
+  else if (req.url?.startsWith('/table-structure') && req.method === 'GET') {
+    const urlParams = new URL(req.url, `http://${req.headers.host}`);
+    const dbName = urlParams.searchParams.get('db');
+    const tableName = urlParams.searchParams.get('table');
+
+    if (!dbName || !tableName) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'Parâmetros incompletos' }));
+    }
+
+    const tablePath = path.join('databases', dbName, `${tableName}.json`);
+
+    try {
+        if (!fs.existsSync(tablePath)) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ error: 'Tabela não encontrada' }));
+        }
+
+        const tableData = JSON.parse(fs.readFileSync(tablePath, 'utf8'));
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+            success: true,
+            fields: tableData.fields,
+            createdAt: tableData.createdAt
+        }));
+    } catch (error) {
+        console.error('Erro ao carregar estrutura:', error);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Erro ao carregar estrutura da tabela' }));
+    }
+}
+
+  //Rota não encontrada (404)
   else {
     res.writeHead(404, { "Content-Type": "text/html" });
     res.write("<h1>Página não encontrada</h1>");

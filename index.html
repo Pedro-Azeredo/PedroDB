@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PedroDB</title>
+  <title>PedroDB - Gerenciador de Banco de Dados</title>
   <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -53,7 +53,7 @@
       <!-- Create Database Section -->
       <section id="create-db" class="card active">
         <h2>Criar Banco de dados</h2>
-        <form id="create-db-form" action="/criar-db" method="POST">
+        <form id="create-db-form">
           <input type="text" id="db-name" name="nameDB" placeholder="Nome do banco de dados" required>
           <button type="submit">Criar banco de dados</button>
         </form>
@@ -63,15 +63,11 @@
       <section id="create-table" class="card">
         <h2>Criar Tabela</h2>
         <form id="create-table-form">
-          <select id="db-name-in-table">
+          <select id="db-name-in-table" required>
+            <option value="">Selecione um banco</option>
           </select>
-          <input type="" id="table-name" placeholder="Nome da tabela" required>
-          <!--
-          <textarea id="table-fields" placeholder="Defina os campos (Exemplo: id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))" required></textarea>
-          -->
-          <div id="fields-container">
-            <!-- Campos serão adicionados aqui dinamicamente -->
-          </div>
+          <input type="text" id="table-name" placeholder="Nome da tabela" required>
+          <div id="fields-container"></div>
           <button type="button" id="add-field">+ Adicionar Campo</button>
           <button type="submit">Criar Tabela</button>
         </form>
@@ -81,8 +77,21 @@
       <section id="insert-record" class="card">
         <h2>Inserir registro</h2>
         <form id="insert-record-form">
-          <input type="text" id="record-table" placeholder="Nome da tabela" required>
-          <textarea id="record-values" placeholder="Inserir valores (Exemplo: 'Pedro Ramos', 23)" required></textarea>
+          <div class="form-group">
+            <label>Banco de Dados:</label>
+            <select id="insert-db-name" required>
+              <option value="">Selecione um banco</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tabela:</label>
+            <select id="insert-table-name" required disabled>
+              <option value="">Selecione uma tabela</option>
+            </select>
+          </div>
+          <div id="insert-fields-container">
+            <!-- Campos serão renderizados aqui dinamicamente -->
+          </div>
           <button type="submit">Inserir Registro</button>
         </form>
       </section>
@@ -91,7 +100,18 @@
       <section id="list-records" class="card">
         <h2>Listar Registros</h2>
         <form id="list-records-form">
-          <input type="text" id="list-table" placeholder="Nome da tabela" required>
+          <div class="form-group">
+            <label>Banco de Dados:</label>
+            <select id="list-db-name" required>
+              <option value="">Selecione um banco</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tabela:</label>
+            <select id="list-table-name" required disabled>
+              <option value="">Selecione uma tabela</option>
+            </select>
+          </div>
           <button type="submit">Listar Registros</button>
         </form>
         <div id="records-output"></div>
@@ -99,7 +119,6 @@
     </main>
   </div>
 
-  <!-- Move the script tag here -->
   <script src="/script.js"></script>
 </body>
 </html>

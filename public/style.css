@@ -253,3 +253,93 @@ button:hover {
   cursor: pointer;
   margin-top: 10px;
 }
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Campos de inserção dinâmica */
+.insert-field {
+  margin-bottom: 15px;
+}
+
+.insert-field label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Tabela de visualização de registros */
+#records-output {
+  margin-top: 20px;
+}
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.record-table th,
+.record-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.record-table th {
+  background-color: #f2f2f2;
+}
+
+/* Layout dos selects */
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #1b1b1d;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+/* Estados desabilitados */
+select:disabled {
+  background-color: #1b1b1d;
+  cursor: not-allowed;
+}
+
+/* Ajustes para os campos de inserção */
+#insert-fields-container input[type="text"],
+#insert-fields-container input[type="datetime-local"],
+#insert-fields-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Estilo para o container dos campos */
+#insert-fields-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #363636;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+/* Mensagens de carregamento */
+.loading-message {
+  color: #666;
+  font-style: italic;
+  padding: 10px;
+}
