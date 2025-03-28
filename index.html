@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PedroDB</title>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>PedroDB</h2>
+        <button id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="#" data-target="create-db">
+              <i class="fas fa-database"></i>
+              <span>Criar Banco de dados</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="create-table">
+              <i class="fas fa-table"></i>
+              <span>Criar tabela</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="insert-record">
+              <i class="fas fa-plus-circle"></i>
+              <span>Inserir Registro</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="list-records">
+              <i class="fas fa-list"></i>
+              <span>Listar Registros</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Create Database Section -->
+      <section id="create-db" class="card active">
+        <h2>Criar Banco de dados</h2>
+        <form id="create-db-form" action="/criar-db" method="POST">
+          <input type="text" id="db-name" name="nameDB" placeholder="Nome do banco de dados" required>
+          <button type="submit">Criar banco de dados</button>
+        </form>
+      </section>
+
+      <!-- Create Table Section -->
+      <section id="create-table" class="card">
+        <h2>Criar Tabela</h2>
+        <form id="create-table-form">
+          <select id="db-name-in-table">
+          </select>
+          <input type="" id="table-name" placeholder="Nome da tabela" required>
+          <!--
+          <textarea id="table-fields" placeholder="Defina os campos (Exemplo: id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255))" required></textarea>
+          -->
+          <div id="fields-container">
+            <!-- Campos serão adicionados aqui dinamicamente -->
+          </div>
+          <button type="button" id="add-field">+ Adicionar Campo</button>
+          <button type="submit">Criar Tabela</button>
+        </form>
+      </section>
+
+      <!-- Insert Record Section -->
+      <section id="insert-record" class="card">
+        <h2>Inserir registro</h2>
+        <form id="insert-record-form">
+          <input type="text" id="record-table" placeholder="Nome da tabela" required>
+          <textarea id="record-values" placeholder="Inserir valores (Exemplo: 'Pedro Ramos', 23)" required></textarea>
+          <button type="submit">Inserir Registro</button>
+        </form>
+      </section>
+
+      <!-- List Records Section -->
+      <section id="list-records" class="card">
+        <h2>Listar Registros</h2>
+        <form id="list-records-form">
+          <input type="text" id="list-table" placeholder="Nome da tabela" required>
+          <button type="submit">Listar Registros</button>
+        </form>
+        <div id="records-output"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Move the script tag here -->
+  <script src="/script.js"></script>
+</body>
+</html>

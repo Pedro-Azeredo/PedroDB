@@ -1,0 +1,23 @@
+{
+  "name": "arrrrrre",
+  "fields": [
+    {
+      "name": "id",
+      "type": "INT",
+      "size": 11,
+      "primary": true,
+      "nullable": true,
+      "default": null
+    },
+    {
+      "name": "arara",
+      "type": "VARCHAR",
+      "size": 255,
+      "primary": false,
+      "nullable": false,
+      "default": null
+    }
+  ],
+  "createdAt": "2025-03-28T06:37:45.032Z",
+  "records": []
+}

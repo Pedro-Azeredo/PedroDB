@@ -1,0 +1,15 @@
+{
+  "name": "arrrrrr",
+  "fields": [
+    {
+      "name": "campo",
+      "type": "VARCHAR",
+      "size": 255,
+      "primary": true,
+      "nullable": true,
+      "default": null
+    }
+  ],
+  "createdAt": "2025-03-28T06:35:03.896Z",
+  "records": []
+}
