@@ -506,3 +506,97 @@ function addFieldRow(field = { name: '', type: 'VARCHAR', size: 255, primary: fa
     e.target.closest('.field-row').remove();
   });
 }
+
+async function handleListRecords(e) {
+    e.preventDefault();
+
+    const dbName = document.getElementById('list-db-name').value;
+    const tableName = document.getElementById('list-table-name').value;
+    const outputDiv = document.getElementById('records-output');
+
+    if (!dbName || !tableName) {
+        alert('Selecione um banco e uma tabela!');
+        return;
+    }
+
+    outputDiv.innerHTML = '<div class="loading-message">Carregando registros...</div>';
+
+    try {
+        const response = await fetch(`/list-records?db=${encodeURIComponent(dbName)}&table=${encodeURIComponent(tableName)}`);
+        const result = await response.json();
+
+        if (result.success) {
+            if (result.count > 0) {
+                renderRecordsTable(result.records, result.fields);
+            } else {
+                outputDiv.innerHTML = '<div class="info-message">Nenhum registro encontrado</div>';
+            }
+
+            // Adiciona contador de registros
+            const countElement = document.createElement('div');
+            countElement.className = 'record-count';
+            countElement.textContent = `Total de registros: ${result.count}`;
+            outputDiv.prepend(countElement);
+        } else {
+            throw new Error(result.message || 'Erro ao carregar registros');
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        outputDiv.innerHTML = `<div class="error-message">Erro ao carregar registros: ${error.message}</div>`;
+    }
+}
+
+function renderRecordsTable(records, fields) {
+    const outputDiv = document.getElementById('records-output');
+    outputDiv.innerHTML = '';
+
+    // Cria a tabela
+    const table = document.createElement('table');
+    table.className = 'record-table';
+
+    // Cria o cabeçalho
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+
+    fields.forEach(field => {
+        const th = document.createElement('th');
+        th.textContent = field.name;
+        th.title = `${field.type}${field.size ? `(${field.size})` : ''} ${field.primary ? '| PK' : ''} ${field.nullable ? '| NULL' : '| NOT NULL'}`;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Cria o corpo da tabela
+    const tbody = document.createElement('tbody');
+
+    records.forEach(record => {
+        const row = document.createElement('tr');
+
+        fields.forEach(field => {
+            const td = document.createElement('td');
+            let value = record[field.name];
+
+            // Formatação especial para diferentes tipos de dados
+            if (value === null || value === undefined) {
+                value = '<span class="null-value">NULL</span>';
+            } else if (typeof value === 'boolean') {
+                value = value ? '<span class="true-value">✓</span>' : '<span class="false-value">✗</span>';
+            } else if (field.type === 'DATE' || field.type === 'DATETIME') {
+                value = new Date(value).toLocaleString();
+            } else if (typeof value === 'object') {
+                value = JSON.stringify(value);
+            }
+
+            td.innerHTML = value;
+            row.appendChild(td);
+        });
+
+        tbody.appendChild(row);
+    });
+
+    table.appendChild(tbody);
+    outputDiv.appendChild(table);
+
+}

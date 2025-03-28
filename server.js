@@ -301,6 +301,40 @@ http.createServer((req, res) => {
         res.end(JSON.stringify({ error: 'Erro ao carregar estrutura da tabela' }));
     }
 }
+  //Rota para listas os registros
+  else if (req.url?.startsWith('/list-records') && req.method === 'GET') {
+    const urlParams = new URL(req.url, `http://${req.headers.host}`);
+    const dbName = urlParams.searchParams.get('db');
+    const tableName = urlParams.searchParams.get('table');
+
+    if (!dbName || !tableName) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'Parâmetros incompletos' }));
+    }
+
+    const tablePath = path.join('databases', dbName, `${tableName}.json`);
+
+    try {
+        if (!fs.existsSync(tablePath)) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ error: 'Tabela não encontrada' }));
+        }
+
+        const tableData = JSON.parse(fs.readFileSync(tablePath, 'utf8'));
+
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+            success: true,
+            records: tableData.records,
+            fields: tableData.fields,
+            count: tableData.records.length
+        }));
+    } catch (error) {
+        console.error('Erro ao listar registros:', error);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Erro ao listar registros' }));
+    }
+}
 
   //Rota não encontrada (404)
   else {
