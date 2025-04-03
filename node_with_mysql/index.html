@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PedroDB - Gerenciador de Banco de Dados</title>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>PedroDB</h2>
+        <button id="sidebar-toggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="#" data-target="create-db">
+              <i class="fas fa-database"></i>
+              <span>Criar Banco de dados</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="create-table">
+              <i class="fas fa-table"></i>
+              <span>Criar tabela</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="insert-record">
+              <i class="fas fa-plus-circle"></i>
+              <span>Inserir Registro</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" data-target="list-records">
+              <i class="fas fa-list"></i>
+              <span>Listar Registros</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Create Database Section -->
+      <section id="create-db" class="card active">
+        <h2>Criar Banco de dados</h2>
+        <form id="create-db-form">
+          <input type="text" id="db-name" name="nameDB" placeholder="Nome do banco de dados" required>
+          <button type="submit">Criar banco de dados</button>
+        </form>
+      </section>
+
+      <!-- Create Table Section -->
+      <section id="create-table" class="card">
+        <h2>Criar Tabela</h2>
+        <form id="create-table-form">
+          <select id="db-name-in-table" required>
+            <option value="">Selecione um banco</option>
+          </select>
+          <input type="text" id="table-name" placeholder="Nome da tabela" required>
+          <div id="fields-container"></div>
+          <button type="button" id="add-field">+ Adicionar Campo</button>
+          <button type="submit">Criar Tabela</button>
+        </form>
+      </section>
+
+      <!-- Insert Record Section -->
+      <section id="insert-record" class="card">
+        <h2>Inserir registro</h2>
+        <form id="insert-record-form">
+          <div class="form-group">
+            <label>Banco de Dados:</label>
+            <label for="insert-db-name"></label><select id="insert-db-name" required>
+              <option value="">Selecione um banco</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tabela:</label>
+            <label for="insert-table-name"></label><select id="insert-table-name" required disabled>
+              <option value="">Selecione uma tabela</option>
+            </select>
+          </div>
+          <div id="insert-fields-container">
+            <!-- Campos serão renderizados aqui dinamicamente -->
+          </div>
+          <button type="submit">Inserir Registro</button>
+        </form>
+    </section>
+
+      <!-- List Records Section -->
+      <section id="list-records" class="card">
+        <h2>Listar Registros</h2>
+        <form id="list-records-form">
+          <div class="form-group">
+            <label>Banco de Dados:</label>
+            <select id="list-db-name" required>
+              <option value="">Selecione um banco</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Tabela:</label>
+            <select id="list-table-name" required disabled>
+              <option value="">Selecione uma tabela</option>
+            </select>
+          </div>
+          <button type="submit">Listar Registros</button>
+        </form>
+        <div id="records-output"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>

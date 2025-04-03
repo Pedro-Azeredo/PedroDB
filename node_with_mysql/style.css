@@ -1,0 +1,392 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #2c1a4d, #1a102e); /* Deep purple gradient */
+  color: #f5f5f5; /* Light text for better readability */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background: rgba(0, 0, 0, 0.8); /* Dark background */
+  padding: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.1s ease;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.sidebar.collapsed .sidebar-header h2,
+.sidebar.collapsed nav ul li span {
+  display: none;
+}
+
+.sidebar.collapsed nav ul li a {
+  justify-content: center;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative; /* Add this for absolute positioning */
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #f5f5f5; /* Light text for better readability */
+  margin: 0;
+}
+
+#sidebar-toggle {
+  background: none;
+  border: none;
+  color: #f5f5f5; /* Light icon color */
+  font-size: 1.5rem; /* Match the size of other icons */
+  cursor: pointer;
+  padding: 0; /* Remove padding */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+  margin-right: 10px; /* Add spacing between hamburger icon and title */
+}
+
+/* Center the icon when sidebar is collapsed */
+.sidebar.collapsed #sidebar-toggle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 10px; /* Adjust this value to match the height when open */
+  margin-right: 0; /* Reset margin when collapsed */
+}
+
+#sidebar-toggle:hover {
+  opacity: 0.8;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  flex: 1;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 15px;
+}
+
+.sidebar nav ul li a {
+  text-decoration: none;
+  color: #f5f5f5; /* Light text for better readability */
+  font-size: 1rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.1s ease;
+}
+
+.sidebar nav ul li a:hover {
+  background: rgba(255, 255, 255, 0.1); /* Light hover effect */
+}
+
+.sidebar nav ul li a i {
+  margin-right: 15px; /* Increase spacing between icons and text */
+  font-size: 1.5rem; /* Match the size of the hamburger icon */
+  color: #7a5fff; /* Purple icon color */
+}
+
+.sidebar.collapsed nav ul li a i {
+  margin-right: 0; /* Remove spacing when sidebar is collapsed */
+}
+
+/* Main Content Styles */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.card {
+  background: rgba(0, 0, 0, 0.8); /* Dark background */
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.card.active {
+  display: block;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #f5f5f5; /* Light text for better readability */
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input, textarea, button, select {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.1); /* Light transparent background */
+  color: #f5f5f5; /* Light text for better readability */
+  transition: background 0.1s ease;
+}
+
+select option {
+  background-color: #1b1b1d;
+}
+
+select option:hover {
+  background-color: #1b1b1d;
+}
+
+
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* Light placeholder text */
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.2); /* Slightly lighter background on focus */
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+button {
+  background: #7a5fff; /* Purple button color */
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+button:hover {
+  background: #6a4de6; /* Darker purple for hover effect */
+}
+
+/* Records Output */
+#records-output {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8); /* Dark background */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5f5f5; /* Light text for better readability */
+}
+
+.field-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.field-row input[type="text"],
+.field-row select,
+.field-row input[type="number"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.field-row input[type="number"] {
+  width: 70px;
+}
+
+.remove-field {
+  background: #ff4444;
+  color: white;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  border-radius: 50%;
+}
+
+.remove-field:hover {
+  background: darkred;
+}
+
+#add-field {
+  background: #ffffff;
+  color: black;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+/* Campos de inserção dinâmica */
+.insert-field {
+  margin-bottom: 15px;
+}
+
+.insert-field label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Tabela de visualização de registros */
+#records-output {
+  margin-top: 20px;
+}
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.record-table th,
+.record-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.record-table th {
+  background-color: #1b1b1d;
+}
+
+/* Layout dos selects */
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #1b1b1d;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+/* Estados desabilitados */
+select:disabled {
+  background-color: #1b1b1d;
+  cursor: not-allowed;
+}
+
+/* Ajustes para os campos de inserção */
+#insert-fields-container input[type="text"],
+#insert-fields-container input[type="datetime-local"],
+#insert-fields-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Estilo para o container dos campos */
+#insert-fields-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #363636;
+  border-radius: 4px;
+  border: 1px solid #eee;
+}
+
+/* Mensagens de carregamento */
+.loading-message {
+  color: #666;
+  font-style: italic;
+  padding: 10px;
+}
+
+.insert-field {
+  margin-bottom: 15px;
+}
+
+.insert-field label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.insert-field input {
+  width: 200px; /* Tamanho padrão para todos os campos */
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.records-table th, .records-table td {
+  border: 1px solid #0d0d0d;
+  padding: 8px;
+  text-align: left;
+}
+
+.records-table th {
+  background-color: #1e115d;
+}
+
+.records-table tr:nth-child(even) {
+  background-color: #0f0f0f;
+}
+
+.record-count {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: #d9534f;
+}
